@@ -1,0 +1,7 @@
+import RPi.GPIO as GPIO
+
+POMP_PIN = 5
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(POMP_PIN,GPIO.OUT)
+GPIO.output(POMP_PIN,GPIO.LOW)
+
