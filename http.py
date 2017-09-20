@@ -2,15 +2,22 @@
 from config import FarmConf
 import requests
 
-watering_uri = "http://" + FarmConf.serv_ip + ":4567/"
-queue_url = watering_uri + "queue"
-completion_url = watering_uri + "completion"
 
 def queue():
-	res = requests.get(queue_url)
+	res = requests.get(FarmConf.queue_url)
 	return res
 
 def completion():
-	res = requests.get(completion_url)
+	res = requests.get(FarmConf.completion_url)
 	return res
 
+def post_data(sensor, data):
+	requests.put(
+			FarmConf.m2x_addr + sensor + "/value",
+			headers=FarmConf.m2x_headers,
+			data=data
+			)	
+
+
+if __name__ == "__main__":
+	post_data("light", {"value" : 40})
