@@ -1,23 +1,16 @@
-# -*- coding: utf-8 -*-
-from config import FarmConf
 import requests
+import config
+import json
 
+def api_post( files, data ):
+	res = requests.post(config.post_url, data=data, files=files)
+	return res.json()[0]
 
-def queue():
-	res = requests.get(FarmConf.queue_url)
-	return res
-
-def completion():
-	res = requests.get(FarmConf.completion_url)
-	return res
-
-def post_data(sensor, data):
-	requests.put(
-			FarmConf.m2x_addr + sensor + "/value",
-			headers=FarmConf.m2x_headers,
-			data=data
-			)	
+def api_get():
+	res = requests.get(config.get_url)
+	return res.json()[0]
 
 
 if __name__ == "__main__":
-	post_data("light", {"value" : 40})
+	res = api_get()
+	print(res)
